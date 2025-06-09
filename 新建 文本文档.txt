@@ -1,0 +1,32 @@
+'links': {
+        'filename': 'links.csv',
+        'table_name': 'links',
+        'column_family': 'external',
+        'row_key_column': 'movieId',
+        'columns': ['imdbId', 'tmdbId']
+    },
+    'genome_tags': {
+        'filename': 'genome-tags.csv',
+        'table_name': 'genome_tags',
+        'column_family': 'info',
+        'row_key_column': 'tagId', 
+        'columns': ['tag']
+    },
+    'genome_scores': {
+        'filename': 'genome-scores.csv',
+        'table_name': 'genome_scores',
+        'column_family': 'score',
+        'row_key_column': 'movieId_tagId',  # 使用复合行键避免覆盖
+        'row_key_components': ['movieId', 'tagId'],  # 行键组成部分
+        'columns': ['relevance'],  # 移除tagId，因为已在行键中
+        'large_file': True,  # 标记为大文件，支持切割
+        'default_chunks': 10  # 默认切割为5份
+    },
+    'avg_ratings': {
+        'filename': None, 
+        'table_name': 'avg_ratings',
+        'column_family': 'stats',
+        'row_key_column': 'movieId',
+        'columns': ['avg_rating', 'rating_count', 'updated_time'],
+        'is_virtual': True  # 标记为虚拟表，不参与CSV导入
+    }
